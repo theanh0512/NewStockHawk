@@ -11,6 +11,7 @@ import android.net.NetworkInfo;
 
 import com.udacity.stockhawk.data.Contract;
 import com.udacity.stockhawk.data.PrefUtils;
+import com.udacity.stockhawk.ui.MainActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,10 +32,11 @@ import yahoofinance.quotes.stock.StockQuote;
 public final class QuoteSyncJob {
 
     static final int ONE_OFF_ID = 2;
-    private static final String ACTION_DATA_UPDATED = "com.udacity.stockhawk.ACTION_DATA_UPDATED";
+    public static final String ACTION_DATA_UPDATED = "com.udacity.stockhawk.ACTION_DATA_UPDATED";
     private static final int PERIOD = 300000;
     private static final int INITIAL_BACKOFF = 10000;
     private static final int PERIODIC_ID = 1;
+
 
     static void getQuotes(Context context) {
 
@@ -58,12 +60,19 @@ public final class QuoteSyncJob {
             }
 
             Map<String, Stock> quotes = YahooFinance.get(stockArray);
-            Iterator<String> iterator = stockCopy.iterator();
-
             Timber.d(quotes.toString());
 
             ArrayList<ContentValues> quoteCVs = new ArrayList<>();
-
+            for (Map.Entry<String, Stock> entry : quotes.entrySet()) {
+                if (entry.getValue().toString().contains("null")) {
+                    quotes.remove(entry.getKey());
+                    stockCopy.remove(entry.getKey());
+                    PrefUtils.editStockPref(context, entry.getKey(), false);
+                    MainActivity.displayToast = true;
+                    break;
+                }
+            }
+            Iterator<String> iterator = stockCopy.iterator();
             while (iterator.hasNext()) {
                 String symbol = iterator.next();
 

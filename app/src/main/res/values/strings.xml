@@ -35,6 +35,9 @@
 
     <string name="toast_stock_added_no_connectivity">Symbol %s added. Will refresh when network available.</string>
     <string name="toast_no_connectivity">Will refresh when network available.</string>
+    <string name="toast_wrong_symbol">Please input the correct symbol</string>
     <string name="stock_overtime_symbol">http://chart.finance.yahoo.com/z?s=<xliff:g id="symbol">%1$s</xliff:g>&amp;t=6m&amp;q=l&amp;l=on&amp;z=s&amp;p=m50,m200</string>
+
+    <string name="title_widget_detail">Quote Details</string>
 
 </resources>

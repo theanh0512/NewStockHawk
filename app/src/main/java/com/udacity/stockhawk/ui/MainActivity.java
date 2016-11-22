@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         StockAdapter.StockAdapterOnClickHandler {
 
     private static final int STOCK_LOADER = 0;
+    public static boolean displayToast = false;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.fab)
@@ -47,8 +48,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onClick(String symbol) {
-        Intent intent = new Intent(this,StockOvertimeActivity.class);
-        intent.putExtra("symbol",symbol);
+        Intent intent = new Intent(this, StockOvertimeActivity.class);
+        intent.putExtra("symbol", symbol);
         startActivity(intent);
     }
 
@@ -151,6 +152,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             error.setVisibility(View.GONE);
         }
         adapter.setCursor(data);
+
+        if (displayToast == true) {
+            displayToast = false;
+            Toast.makeText(this, getString(R.string.toast_wrong_symbol), Toast.LENGTH_LONG).show();
+        }
     }
 
 
