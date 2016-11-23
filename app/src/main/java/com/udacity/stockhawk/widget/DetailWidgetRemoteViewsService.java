@@ -91,19 +91,29 @@ public class DetailWidgetRemoteViewsService extends RemoteViewsService {
                 float percentageChange = data.getFloat(INDEX_QUOTE_PERCENTAGE_CHANGE);
                 String quoteHistory = data.getString(INDEX_QUOTE_HISTORY);
                 if (quoteAbsoluteChange > 0) {
-                    views.setInt(R.id.change,"setBackgroundResource",R.drawable.percent_change_pill_green);
+                    views.setInt(R.id.change, "setBackgroundResource", R.drawable.percent_change_pill_green);
                 } else {
-                    views.setInt(R.id.change,"setBackgroundResource",R.drawable.percent_change_pill_red);
+                    views.setInt(R.id.change, "setBackgroundResource", R.drawable.percent_change_pill_red);
                 }
                 views.setTextViewText(R.id.symbol, quoteSymbol);
                 views.setTextViewText(R.id.price, String.valueOf(quotePrice));
-                views.setTextViewText(R.id.change, String.valueOf(percentageChange)+"%");
+                views.setTextViewText(R.id.change, String.valueOf(percentageChange) + "%");
+
+                String description = quoteSymbol + " " + String.valueOf(quotePrice) + ", changed " + percentageChange + " percent";
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+                    setRemoteContentDescription(views, description);
+                }
 
                 final Intent fillInIntent = new Intent();
                 Uri quoteUri = Contract.Quote.makeUriForStock(quoteSymbol);
                 fillInIntent.setData(quoteUri);
                 views.setOnClickFillInIntent(R.id.widget_list_item, fillInIntent);
                 return views;
+            }
+
+            @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
+            private void setRemoteContentDescription(RemoteViews views, String description) {
+                views.setContentDescription(R.id.symbol, description);
             }
 
             @Override

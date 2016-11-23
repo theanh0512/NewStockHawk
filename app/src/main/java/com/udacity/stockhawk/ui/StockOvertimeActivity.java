@@ -52,5 +52,6 @@ public class StockOvertimeActivity extends AppCompatActivity {
                         });
             }
         });
+        stockOvertimeImageview.setContentDescription(getString(R.string.a11y_stock_overtime, symbol));
     }
 }
