@@ -47,4 +47,5 @@
     <string name="a11y_change">Changed: <xliff:g id="change">%1$s</xliff:g></string>
     <string name="a11y_percentage">Percentage changed: <xliff:g id="percentage">%1$s</xliff:g> percent</string>
     <string name="a11y_stock_overtime">Stock price overtime: <xliff:g id="stock_overtime">%1$s</xliff:g></string>
+    <string name="button_add_stock_symbol">Button add stock symbol</string>
 </resources>
